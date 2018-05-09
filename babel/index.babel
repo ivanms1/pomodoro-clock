@@ -1,0 +1,122 @@
+let audio = new Audio('http://www.wavsource.com/snds_2017-12-04_8268401740269038/sfx/buzzer_x.wav');
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {seconds:'0', minutes:25, sesMin:25,breakMin:5,inSession:true, started:false}
+    this.startClock = this.startClock.bind(this)
+    this.plusBreak = this.plusBreak.bind(this)
+    this.minusBreak = this.minusBreak.bind(this)
+    this.plusSession = this.plusSession.bind(this)
+    this.minusSession = this.minusSession.bind(this)
+  }
+  
+  startClock(){
+    if(this.state.started == false){
+    console.log(this.state.started)
+    this.setState({seconds:59})
+    this.setState({started:true})
+    this.setState({minutes:this.state.minutes-1})
+    this.counter = setInterval(this.timer.bind(this), 1000)
+    
+    }
+    if(this.state.started == true){
+      clearInterval(this.counter)
+      this.setState({minutes:this.state.sesMin, seconds:'0'})
+      this.setState({started:false, inSession: true})
+      console.log(this.state.started)
+      
+    }
+  }
+  
+ timer(){
+   if(this.state.minutes==0 && this.state.seconds == 1 && this.state.inSession==false){
+     this.setState({minutes:this.state.sesMin, inSession:true})
+     audio.play();
+     console.log(this.state.inSession)
+   }
+   if(this.state.minutes==0 && this.state.seconds == 1 && this.state.inSession==true){
+     this.setState({minutes:this.state.breakMin, inSession: false})
+     audio.play();
+     console.log(this.state.inSession)
+   }
+ if(this.state.seconds==0){
+     this.setState({minutes: this.state.minutes-1, seconds:60})
+   }
+   
+      this.setState({seconds: this.state.seconds-1})
+    }
+  
+  plusBreak(){
+    if(this.state.started == false){
+    this.setState({breakMin: this.state.breakMin+1})
+    }
+    else alert('Please reset the clock first')
+  }
+  minusBreak(){
+    if(this.state.started == false){
+    if(this.state.breakMin > 1){
+    this.setState({breakMin: this.state.breakMin-1})
+    }
+    }
+    else alert('Please reset the clock first')
+  }
+  plusSession(){
+    if(this.state.started==false){
+    this.setState({minutes:this.state.minutes+5, sesMin:this.state.minutes+5})
+  }
+    else alert('Please reset the clock first')
+  }
+  
+  minusSession(){
+    if(this.state.started == false){
+    if(this.state.minutes > 5){
+    this.setState({minutes:this.state.minutes-5, sesMin:this.state.minutes-5})
+    }
+    }
+    else alert('Please reset the clock first')
+  }
+  render(){
+    return(
+          <div>
+            <h1 className='title'>FreeCodeCamp Pomodoro Clock</h1>
+            <Buttons seconds={this.state.seconds} minutes={this.state.minutes} plusBreak={this.plusBreak} minusBreak={this.minusBreak} plusSession={this.plusSession} minusSession={this.minusSession} breakMin={this.state.breakMin} sesMin={this.state.sesMin}/>
+            <Clock inSession={this.state.inSession} seconds={this.state.seconds} minutes={this.state.minutes}/>
+            <button onClick={this.startClock}>Start / Reset</button>
+          </div>
+    )
+  }
+}
+
+class Buttons extends React.Component{
+  render(){
+    return(
+         <div className='main'>
+          <div className='buttonContainer'>
+            <h3>Break Length</h3>
+              <div className='buttons'>
+                <button onClick={this.props.minusBreak}>-</button><h4>{this.props.breakMin} min</h4><button onClick={this.props.plusBreak}>+</button>
+              </div>
+          </div>
+          <div className='buttonContainer'>
+            <h3>Session Length</h3>
+              <div className='buttons'>
+                <button onClick={this.props.minusSession}>-</button><h4>{this.props.sesMin} min</h4><button onClick={this.props.plusSession}>+</button>
+              </div>
+          </div>
+         </div>
+    )
+  }
+}
+
+class Clock extends React.Component{
+  render(){
+    return (
+        <div className='circle'>
+        <h1 className='clockTitle'> {this.props.inSession?'Session':'Break'}</h1>
+        <h2>{this.props.minutes<10?'0':''}{this.props.minutes}:{this.props.seconds<10?'0':''}{this.props.seconds}</h2>
+        </div>
+    )
+  }
+}
+
+ReactDOM.render(<App/>, document.getElementById('root'));

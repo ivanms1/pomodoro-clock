@@ -1,0 +1,93 @@
+html { 
+  background: url(https://images.unsplash.com/photo-1493552832879-f61d5dce6c9e?auto=format&fit=crop&w=1500&q=80) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#root{
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-family: 'Roboto Mono', monospace;
+  
+}
+
+.main{
+  display: flex;
+  justify-content: center;
+}
+
+.buttonContainer{
+  padding: 1%;
+}
+
+.buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button{
+  margin: 3%;
+  color:black;
+}
+
+.circle{
+  border: solid 0.2vw white;
+  width: 22vw;
+  height: 22vw;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.clockTitle{
+  margin: 28% 0 0 0;
+  font-size: 3vw;
+  padding:1%;
+}
+h1{
+  font-size: 4vw;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+h2{
+  font-size:5vw
+}
+
+h3{
+  font-size: 2.5vw
+}
+
+.title{
+  padding-top: 4%
+}
+
+h4{
+  font-size: 2.5vw;
+}
+
+@media(max-width:600px){
+  .circle{
+    width: 40vw;
+  height: 40vw;
+  }
+  
+  h4{
+  font-size: 4vw;
+}
+  h3{
+  font-size: 5vw
+}
+  .clockTitle{
+  margin: 35% 0 0 0;
+  font-size: 5vw;
+}
+  h1{
+    font-size:6vw;
+  }
+}
